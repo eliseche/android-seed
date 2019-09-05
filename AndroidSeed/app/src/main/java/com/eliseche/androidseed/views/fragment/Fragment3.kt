@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import com.eliseche.androidseed.BR
 import com.eliseche.androidseed.R
 import com.eliseche.androidseed.databinding.Fragment3Binding
+import com.eliseche.androidseed.extensions.onChange
 import com.eliseche.androidseed.viewmodels.ViewModelFragment3
+import kotlinx.android.synthetic.main.fragment_3.*
 
 class Fragment3 : Fragment() {
     private lateinit var viewModelFragment3: ViewModelFragment3
@@ -37,17 +39,15 @@ class Fragment3 : Fragment() {
 
     //region Setup
     private fun init() {
-        /*
-        adapterPromo = DataBindingViewModelAdapter(R.layout.item_promo, ViewModelItemPromotion::class.java, viewModelTraining)
-        list_promo.layoutManager = GridLayoutManager(activity, 1)
-        list_promo.setHasFixedSize(true)
-        list_promo.adapter = adapterPromo
+        checkbox_show_container.setOnClickListener {
+            viewModelFragment3.isVisible.postValue(checkbox_show_container.isChecked)
+        }
 
-        viewModelTraining.promos.observe(this, Observer {
-            it?.let {
-                refreshPromotions(it)
-            }
-        })*/
+        edittext_input.onChange {
+            viewModelFragment3.someText.postValue(it)
+        }
+
+        checkbox_show_container.isChecked = true
     }
     //endregion
 }

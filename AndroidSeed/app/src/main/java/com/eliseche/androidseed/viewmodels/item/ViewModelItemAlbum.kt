@@ -10,4 +10,7 @@ class ViewModelItemAlbum : IViewModelBase {
         if (item is Album)
             album = item
     }
+
+    fun hint() = "That is why we use a ViewModelItem, when we want to perform some data manipulation," +
+            "that shouldn't be on the Model."
 }
