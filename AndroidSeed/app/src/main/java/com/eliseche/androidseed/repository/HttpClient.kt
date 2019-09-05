@@ -1,7 +1,9 @@
 package com.eliseche.androidseed.repository
 
+import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
+import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 
 class HttpClient {
@@ -19,22 +21,16 @@ class HttpClient {
             .build()
     }
 
-    fun makeRequest(customClient: OkHttpClient, request: Request, completion: (PHResult<String>) -> Unit) {
-        executeRequest(customClient, request, completion)
-    }
-
-    fun makeRequest(request: Request, completion: (PHResult<String>) -> Unit) {
-        executeRequest(client, request, completion)
-    }
-
-    private fun executeRequest(client: OkHttpClient, request: Request, completion: (PHResult<String>) -> Unit) {
+    fun <T : Any> makeRequest(request: Request, type: Class<T>, completion: (PHResult<T>) -> Unit) {
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     try {
                         val resultString = response.body()?.string()
 
-                        completion(PHResult.success(resultString!!))
+                        val result: T = Gson().fromJson(resultString, type)
+
+                        completion(PHResult.success(result))
                     } catch (e: Exception) {
                         completion(PHResult.error(e.message, response.code()))
                     }
