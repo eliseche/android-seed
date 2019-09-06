@@ -15,20 +15,11 @@ class ServiceAlbum {
                 .url(Urls.URL_GET_ALBUMS)
                 .build()
 
-        HttpClient.instance.makeRequest(request) {
+        HttpClient.instance.makeRequest(request, Array<Album>::class.java) {
             if (it is PHResult.success) {
-                try {
-                    val posts = Gson().fromJson(it.data, Array<Album>::class.java).toMutableList()
-
-                    completion(PHResult.success(posts))
-                } catch (e: Exception) {
-                    Log.e(javaClass.name, e.message)
-
-                    completion(PHResult.error(e.message, null))
-                }
+                completion(PHResult.success(it.data.toList()))
             } else if (it is PHResult.error) {
                 Log.e(javaClass.name, it.error)
-
                 completion(it)
             }
         }
@@ -39,20 +30,11 @@ class ServiceAlbum {
                 .url(Urls.URL_GET_PHOTOS)
                 .build()
 
-        HttpClient.instance.makeRequest(request) {
+        HttpClient.instance.makeRequest(request, Array<Photo>::class.java) {
             if (it is PHResult.success) {
-                try {
-                    val posts = Gson().fromJson(it.data, Array<Photo>::class.java).toMutableList()
-
-                    completion(PHResult.success(posts))
-                } catch (e: Exception) {
-                    Log.e(javaClass.name, e.message)
-
-                    completion(PHResult.error(e.message, null))
-                }
+                completion(PHResult.success(it.data.toList()))
             } else if (it is PHResult.error) {
                 Log.e(javaClass.name, it.error)
-
                 completion(it)
             }
         }
@@ -63,20 +45,11 @@ class ServiceAlbum {
                 .url(String.format(Urls.URL_GET_PHOTO, albumId.toString()))
                 .build()
 
-        HttpClient.instance.makeRequest(request) {
+        HttpClient.instance.makeRequest(request, Array<Photo>::class.java) {
             if (it is PHResult.success) {
-                try {
-                    val posts = Gson().fromJson(it.data, Array<Photo>::class.java).toMutableList()
-
-                    completion(PHResult.success(posts))
-                } catch (e: Exception) {
-                    Log.e(javaClass.name, e.message)
-
-                    completion(PHResult.error(e.message, null))
-                }
+                completion(PHResult.success(it.data.toList()))
             } else if (it is PHResult.error) {
                 Log.e(javaClass.name, it.error)
-
                 completion(it)
             }
         }

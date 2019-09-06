@@ -14,20 +14,10 @@ class ServicePost {
             .url(Urls.URL_GET_POSTS)
             .build()
 
-        HttpClient.instance.makeRequest(request) {
+        HttpClient.instance.makeRequest(request, Array<Post>::class.java) {
             if (it is PHResult.success) {
-                try {
-                    val posts = Gson().fromJson(it.data, Array<Post>::class.java).toMutableList()
-
-                    completion(PHResult.success(posts))
-                } catch (e: Exception) {
-                    Log.e(javaClass.name, e.message)
-
-                    completion(PHResult.error(e.message, null))
-                }
+                completion(PHResult.success(it.data.toList()))
             } else if (it is PHResult.error) {
-                Log.e(javaClass.name, it.error)
-
                 completion(it)
             }
         }
