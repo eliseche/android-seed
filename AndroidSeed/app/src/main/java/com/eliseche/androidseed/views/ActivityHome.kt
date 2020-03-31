@@ -1,9 +1,9 @@
 package com.eliseche.androidseed.views
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
 import com.eliseche.androidseed.R
 import com.eliseche.androidseed.viewmodels.ViewModelHome
 import com.eliseche.androidseed.views.fragment.Fragment1
